@@ -3,25 +3,21 @@ import Home from './components/Home';
 import About from './components/About';
 import Vans from './components/Vans';
 import VanDetail from './components/VanDetail';
+import Layout from './components/Layout';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-      <header>
-        <Link className="site-logo" to="/">#VANLIFE</Link>
-        <nav>
-          <Link to="/about">About</Link>
-          <Link to="/vans">Vans</Link>
-      </nav>
-      </header>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />}/>
           <Route path="/vans" element={<Vans />}/>
           <Route path="/vans/:id" element={<VanDetail />}/>
-        </Routes>
-      </BrowserRouter>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
