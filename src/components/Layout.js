@@ -8,7 +8,7 @@ function Layout() {
       <Header />
       <Outlet />
     </>
-  )
+  );
 }
 
 export default Layout;
