@@ -8,7 +8,10 @@ import Dashboard from './components/Dashboard';
 import Income from './components/Income';
 import Reviews from './components/Reviews';
 import HostLayout from './components/HostLayout';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import HostVans from './components/HostVans';
+import HostVansDetails from './components/HostVansDetails';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="income" element={<Income />}/>
             <Route path="reviews" element={<Reviews />}/>
+            <Route path="vans" element={<HostVans />}/>
+            <Route path="vans/:id" element={<HostVansDetails />}/>
           </Route>
         </Route>/income
       </Routes>
