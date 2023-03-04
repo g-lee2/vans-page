@@ -10,6 +10,9 @@ import Reviews from './components/Reviews';
 import HostLayout from './components/HostLayout';
 import HostVans from './components/HostVans';
 import HostVansDetails from './components/HostVansDetails';
+import HostVansPhotos from './components/HostVansPhotos';
+import HostVansPricing from './components/HostVansPricing';
+import HostVansInfo from './components/HostVansInfo';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -27,7 +30,11 @@ function App() {
             <Route path="income" element={<Income />}/>
             <Route path="reviews" element={<Reviews />}/>
             <Route path="vans" element={<HostVans />}/>
-            <Route path="vans/:id" element={<HostVansDetails />}/>
+            <Route path="vans/:id" element={<HostVansDetails />}>
+              <Route index element={<HostVansInfo />} />
+              <Route path="pricing" element={<HostVansPricing />} />
+              <Route path="photos" element={<HostVansPhotos />} />
+            </Route>
           </Route>
         </Route>/income
       </Routes>

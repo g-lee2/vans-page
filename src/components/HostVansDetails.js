@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, NavLink, Outlet } from 'react-router-dom';
 
 function HostVansDetails() {
   const params = useParams();
@@ -14,6 +14,12 @@ function HostVansDetails() {
   if (!hostVanDetail) {
     return <h1>Loading...</h1>
   } 
+
+  const hostStyle = {
+    color: "#161616",
+    textDecoration: "underline",
+    fontWeight: 700
+  }
   
   return ( 
     <section>
@@ -27,6 +33,12 @@ function HostVansDetails() {
             <h4>${hostVanDetail.price}/day</h4>
           </div>
         </div>
+        <nav className="host-van-detail-nav">
+          <NavLink to="." end style={({isActive}) => isActive ? hostStyle : null}>Details</NavLink>
+          <NavLink to="pricing" style={({isActive}) => isActive ? hostStyle : null}>Pricing</NavLink>
+          <NavLink to="photos" style={({isActive}) => isActive ? hostStyle : null}>Photos</NavLink>
+        </nav>
+        <Outlet />
       </div>
     </section>
   );
