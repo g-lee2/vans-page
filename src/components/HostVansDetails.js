@@ -38,7 +38,7 @@ function HostVansDetails() {
           <NavLink to="pricing" style={({isActive}) => isActive ? hostStyle : null}>Pricing</NavLink>
           <NavLink to="photos" style={({isActive}) => isActive ? hostStyle : null}>Photos</NavLink>
         </nav>
-        <Outlet />
+        <Outlet context={{ hostVanDetail }} />
       </div>
     </section>
   );
