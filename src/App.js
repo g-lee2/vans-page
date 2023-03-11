@@ -13,6 +13,7 @@ import HostVansDetails from './components/HostVansDetails';
 import HostVansPhotos from './components/HostVansPhotos';
 import HostVansPricing from './components/HostVansPricing';
 import HostVansInfo from './components/HostVansInfo';
+import NotFound from './components/NotFound';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -20,8 +21,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}/>
           <Route path="about" element={<About />}/>
           <Route path="vans" element={<Vans />}/>
           <Route path="vans/:id" element={<VanDetail />}/>
@@ -36,6 +37,7 @@ function App() {
               <Route path="photos" element={<HostVansPhotos />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />}/>
         </Route>/income
       </Routes>
     </BrowserRouter>
