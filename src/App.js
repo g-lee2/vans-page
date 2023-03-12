@@ -14,6 +14,7 @@ import HostVansPhotos from './components/HostVansPhotos';
 import HostVansPricing from './components/HostVansPricing';
 import HostVansInfo from './components/HostVansInfo';
 import NotFound from './components/NotFound';
+import Error from './components/Error';
 
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 
@@ -21,7 +22,7 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Layout />}>
     <Route index element={<Home />}/>
     <Route path="about" element={<About />}/>
-    <Route path="vans" element={<Vans />} loader={vansLoader} />
+    <Route path="vans" element={<Vans />} loader={vansLoader} errorElement={<Error />}/>
     <Route path="vans/:id" element={<VanDetail />}/>
     <Route path="host" element={<HostLayout />}>
       <Route index element={<Dashboard />} />
