@@ -1,7 +1,7 @@
 import './App.css';
 import Home from './components/Home';
 import About from './components/About';
-import Vans from './components/Vans';
+import Vans, { loader as vansLoader } from './components/Vans';
 import VanDetail from './components/VanDetail';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
@@ -21,7 +21,7 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Layout />}>
     <Route index element={<Home />}/>
     <Route path="about" element={<About />}/>
-    <Route path="vans" element={<Vans />}/>
+    <Route path="vans" element={<Vans />} loader={vansLoader} />
     <Route path="vans/:id" element={<VanDetail />}/>
     <Route path="host" element={<HostLayout />}>
       <Route index element={<Dashboard />} />
