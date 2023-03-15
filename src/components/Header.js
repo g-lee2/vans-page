@@ -15,6 +15,9 @@ function Header() {
         <NavLink to="/host" style={({isActive}) => isActive ? navStyle : null}>Host</NavLink>
         <NavLink to="/about" style={({isActive}) => isActive ? navStyle : null}>About</NavLink>
         <NavLink to="/vans" style={({isActive}) => isActive ? navStyle : null}>Vans</NavLink>
+        <Link to="login" className="login-link">
+          <img src="../assets/images/avatar-icon.png" className="login-icon" />
+        </Link>
       </nav>
     </header>
   );
