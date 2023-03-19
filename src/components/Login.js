@@ -7,8 +7,8 @@ export default function Login() {
   
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const location = useLocation();
   
   function handleSubmit(e) {
@@ -18,7 +18,8 @@ export default function Login() {
     loginUser(loginFormData)
       .then(data => {
         console.log(data);
-        navigate("/host");
+        localStorage.setItem("loggedin", true);
+        navigate("/host", { replace: true });
       })
       .catch(err => {
         setError(err);
