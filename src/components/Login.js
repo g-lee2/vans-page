@@ -7,6 +7,7 @@ export default function Login() {
   
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const location = useLocation();
   
@@ -16,13 +17,14 @@ export default function Login() {
     setError(null);
     loginUser(loginFormData)
       .then(data => {
-        console.log(data)
+        console.log(data);
+        navigate("/host");
       })
       .catch(err => {
-        setError(err)
+        setError(err);
       })
       .finally(() => {
-        setStatus("idle")
+        setStatus("idle");
       })
   }
 
