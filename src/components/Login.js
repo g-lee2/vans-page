@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate, Form, useActionData } from "react-router-dom";
+import { useLocation, useNavigate, Form, useActionData, useNavigation } from "react-router-dom";
 import { loginUser } from "../api";
 
 
@@ -20,10 +20,10 @@ export async function action({ request }) {
 }
 
 export default function Login() {
-  const [status, setStatus] = useState("idle");
   const data = useActionData();
   const navigate = useNavigate();
   const location = useLocation();
+  const navigation = useNavigation();
   const from = location.state?.from || "/host";
   
   if (data?.token) {
@@ -46,7 +46,7 @@ export default function Login() {
           type="password"
           placeholder="Password"
         />
-        <button disabled={status === "submitting"}>{status === "submitting" ? "Logging in..." : "Log in"}</button>
+        <button disabled={navigation.state === "submitting"}>{navigation.state === "submitting" ? "Logging in..." : "Log in"}</button>
       </Form>
     </div>
   );
