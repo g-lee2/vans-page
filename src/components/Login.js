@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Form } from "react-router-dom";
 import { loginUser } from "../api";
+
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const email = formData.get("email");
+  const password = formData.get("password");
+  console.log(email, password);
+}
 
 export default function Login() {
   const [loginFormData, setLoginFormData] = useState({ email: "", password: "" });
@@ -43,7 +51,7 @@ export default function Login() {
       {location.state?.message && <h3>{location.state.message}</h3>}
       <h1>Sign in to your account</h1>
       {error && <h3>{error.message}</h3>}
-      <form onSubmit={handleSubmit} className="login-form">
+      <Form action="/login" method="post" className="login-form">
         <input
           name="email"
           onChange={handleChange}
@@ -59,7 +67,7 @@ export default function Login() {
           value={loginFormData.password}
         />
         <button disabled={status === "submitting"}>{status === "submitting" ? "Logging in..." : "Log in"}</button>
-      </form>
+      </Form>
     </div>
   );
 }
