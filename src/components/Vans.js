@@ -8,15 +8,9 @@ export function loader() {
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [error, setError] = useState(null);
   const dataPromise = useLoaderData();
 
   const typeFilter = searchParams.get("type");
-
-
-  if (error) {
-    return <h1>There was an error: {error.message}</h1>
-  }
 
   function renderVanElements(vans) {
     const filteredVans = typeFilter ? vans.filter(van => van.type.toLowerCase() === typeFilter) : vans;

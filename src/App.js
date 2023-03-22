@@ -4,7 +4,7 @@ import About from './components/About';
 import Vans, { loader as vansLoader } from './components/Vans';
 import VanDetail, { loader as vanDetailLoader } from './components/VanDetail';
 import Layout from './components/Layout';
-import Dashboard from './components/Dashboard';
+import Dashboard, { loader as dashboardLoader } from './components/Dashboard';
 import Income from './components/Income';
 import Reviews from './components/Reviews';
 import HostLayout from './components/HostLayout';
@@ -22,19 +22,20 @@ import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } 
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Layout />}>
-    <Route index element={<Home />}/>
-    <Route path="about" element={<About />}/>
+    <Route index element={<Home />} />
+    <Route path="about" element={<About />} />
     <Route path="login" element={<Login />} action={loginAction} />
     <Route path="vans" element={<Vans />} loader={vansLoader} errorElement={<Error />}/>
-    <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} />
+    <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} errorElement={<Error />}/>
     
     <Route element={<AuthRequired />}>
       <Route path="host" element={<HostLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="income" element={<Income />}/>
-        <Route path="reviews" element={<Reviews />}/>
-        <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
-        <Route path="vans/:id" element={<HostVansDetails />} loader={hostVanDetailLoader} >
+        <Route index element={<Dashboard />} errorElement={<Error />}
+          loader={dashboardLoader} />
+        <Route path="income" element={<Income />} />
+        <Route path="reviews" element={<Reviews />} />
+        <Route path="vans" element={<HostVans />} loader={hostVansLoader} errorElement={<Error />} />
+        <Route path="vans/:id" element={<HostVansDetails />} loader={hostVanDetailLoader} errorElement={<Error />} >
           <Route index element={<HostVansInfo />} />
           <Route path="pricing" element={<HostVansPricing />} />
           <Route path="photos" element={<HostVansPhotos />} />
