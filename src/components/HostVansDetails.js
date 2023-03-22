@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, NavLink, Outlet } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { useParams, Link, NavLink, Outlet, useLoaderData, defer, Await } from 'react-router-dom';
+import { getHostVans } from '../api';
 
-function HostVansDetails() {
-  const params = useParams();
-  const [hostVanDetail, setHostVanDetail] = useState(null);
+export function loader({params}) {
+  const hostVanId = params.id;
+  return defer({ vans: getHostVans(hostVanId) });
+}
 
-  useEffect(() => {
-    fetch(`/api/host/vans/${params.id}`)
-      .then(res => res.json())
-      .then(data => setHostVanDetail(data.vans))
-  }, []);
-
-  if (!hostVanDetail) {
-    return <h1>Loading...</h1>
-  } 
+export default function HostVansDetails() {
+  const dataPromise = useLoaderData();
 
   const hostStyle = {
     color: "#161616",
     textDecoration: "underline",
     fontWeight: 700
   }
-  
-  return ( 
-    <section>
-      <Link to=".." relative="path" className="back-button">&larr;<span>Back to all vans</span></Link>
+
+  function hostVanDetailEl(hostVanDetail) {
+    return (
       <div className="host-van-detail-layout-container">
         <div className="host-van-detail">
           <img src={hostVanDetail.imageUrl} />
@@ -40,8 +34,17 @@ function HostVansDetails() {
         </nav>
         <Outlet context={{ hostVanDetail }} />
       </div>
+    );
+  }
+  
+  return ( 
+    <section>
+      <Link to=".." relative="path" className="back-button">&larr;<span>Back to all vans</span></Link>
+      <Suspense fallback={<h2>Loading host van detail...</h2>}>
+        <Await resolve={dataPromise.vans}>
+          {hostVanDetailEl}
+        </Await>
+      </Suspense>  
     </section>
   );
 }
-
-export default HostVansDetails;

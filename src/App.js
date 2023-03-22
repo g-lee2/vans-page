@@ -2,14 +2,14 @@ import './App.css';
 import Home from './components/Home';
 import About from './components/About';
 import Vans, { loader as vansLoader } from './components/Vans';
-import VanDetail from './components/VanDetail';
+import VanDetail, { loader as vanDetailLoader } from './components/VanDetail';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import Income from './components/Income';
 import Reviews from './components/Reviews';
 import HostLayout from './components/HostLayout';
 import HostVans, { loader as hostVansLoader } from './components/HostVans';
-import HostVansDetails from './components/HostVansDetails';
+import HostVansDetails, { loader as hostVanDetailLoader } from './components/HostVansDetails';
 import HostVansPhotos from './components/HostVansPhotos';
 import HostVansPricing from './components/HostVansPricing';
 import HostVansInfo from './components/HostVansInfo';
@@ -26,15 +26,15 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="about" element={<About />}/>
     <Route path="login" element={<Login />} action={loginAction} />
     <Route path="vans" element={<Vans />} loader={vansLoader} errorElement={<Error />}/>
-    <Route path="vans/:id" element={<VanDetail />}/>
+    <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} />
     
     <Route element={<AuthRequired />}>
       <Route path="host" element={<HostLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="income" element={<Income />}/>
         <Route path="reviews" element={<Reviews />}/>
-        <Route path="vans" element={<HostVans />} loader={hostVansLoader} errorElement={<Error />}/>
-        <Route path="vans/:id" element={<HostVansDetails />}>
+        <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
+        <Route path="vans/:id" element={<HostVansDetails />} loader={hostVanDetailLoader} >
           <Route index element={<HostVansInfo />} />
           <Route path="pricing" element={<HostVansPricing />} />
           <Route path="photos" element={<HostVansPhotos />} />

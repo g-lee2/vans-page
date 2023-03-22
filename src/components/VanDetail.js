@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Link, useLocation, useLoaderData, defer, Await } from "react-router-dom";
+import { getVans } from "../api";
 
-function VanDetail() {
-  const params = useParams();
+export function loader({params}) {
+  const vanId = params.id;
+  return defer({ vans: getVans(vanId) });
+}
+
+export default function VanDetail() {
   const location = useLocation();
-  const [vanDetail, setVanDetail] = useState(null);
-
-  useEffect(() => {
-    fetch(`/api/vans/${params.id}`)
-      .then(res => res.json())
-      .then(data => setVanDetail(data.vans))
-  }, [params.id]);
+  const dataPromise = useLoaderData();
 
   const search = location.state?.search || "";
   const type = location.state?.type || "all";
@@ -18,18 +17,21 @@ function VanDetail() {
   return (
     <div className="van-detail-container">
       <Link to={`..${search}`} relative="path" className="back-button">&larr; <span>Back to {type} vans</span></Link>
-      {vanDetail ? (
-        <div className="van-detail">
-          <img src={vanDetail.imageUrl} />
-          <i className={`van-type ${vanDetail.type} selected`}>{vanDetail.type}</i>
-          <h2>{vanDetail.name}</h2>
-          <p className="van-price"><span>${vanDetail.price}</span>/day</p>
-          <p>{vanDetail.description}</p>
-          <button className="link-button">Rent this van</button>
-        </div>
-      ) : <h2>Loading...</h2>}
+      <Suspense fallback={<h2>Loading van detail...</h2>}>
+        <Await resolve={dataPromise.vans}>
+          {(vanDetail) => (
+            <div className="van-detail">
+              <img src={vanDetail.imageUrl} />
+              <i className={`van-type ${vanDetail.type} selected`}>{vanDetail.type}</i>
+              <h2>{vanDetail.name}</h2>
+              <p className="van-price"><span>${vanDetail.price}</span>/day</p>
+              <p>{vanDetail.description}</p>
+              <button className="link-button">Rent this van</button>
+            </div>
+          )}
+        </Await>
+      </Suspense>
     </div>
   )
 }
 
-export default VanDetail;
