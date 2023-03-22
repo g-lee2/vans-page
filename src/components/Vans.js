@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Link, useSearchParams, useLoaderData, defer, Await } from 'react-router-dom';
 import { getVans } from '../api';
 
@@ -52,9 +52,11 @@ export default function Vans() {
   return (
     <div className="van-list-container">
       <h1>Explore our van options</h1>
-      <Await resolve={dataPromise.vans}>
-        {renderVanElements}
-      </Await>
+      <Suspense fallback={<h2>Loading Van...</h2>}>
+        <Await resolve={dataPromise.vans}>
+          {renderVanElements}
+        </Await>
+      </Suspense>
     </div>
   );
 }
