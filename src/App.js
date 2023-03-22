@@ -8,7 +8,7 @@ import Dashboard from './components/Dashboard';
 import Income from './components/Income';
 import Reviews from './components/Reviews';
 import HostLayout from './components/HostLayout';
-import HostVans from './components/HostVans';
+import HostVans, { loader as hostVansLoader } from './components/HostVans';
 import HostVansDetails from './components/HostVansDetails';
 import HostVansPhotos from './components/HostVansPhotos';
 import HostVansPricing from './components/HostVansPricing';
@@ -33,7 +33,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route index element={<Dashboard />} />
         <Route path="income" element={<Income />}/>
         <Route path="reviews" element={<Reviews />}/>
-        <Route path="vans" element={<HostVans />}/>
+        <Route path="vans" element={<HostVans />} loader={hostVansLoader} errorElement={<Error />}/>
         <Route path="vans/:id" element={<HostVansDetails />}>
           <Route index element={<HostVansInfo />} />
           <Route path="pricing" element={<HostVansPricing />} />

@@ -1,45 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Link, useLoaderData, defer, Await } from 'react-router-dom';
+import { getHostVans } from '../api';
 
-function HostVans() {
-  const [hostVans, setHostVans] = useState([]);
+export function loader() {
+  return defer({ vans: getHostVans() });
+}
 
-  useEffect(() => {
-    fetch("/api/host/vans")
-      .then(res => res.json())
-      .then(data => setHostVans(data.vans));
-  }, []);
+export default function HostVans() {
+  const dataPromise = useLoaderData();
+  console.log(dataPromise);
 
-  const hostVansEls = hostVans.map(van => (
-    <Link
-      to={van.id}
-      key={van.id}
-      className="host-van-link-wrapper"
-    >
-      <div className="host-van-single" key={van.id}>
-        <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
-        <div className="host-van-info">
-          <h3>{van.name}</h3>
-          <p>${van.price}/day</p>
+  function renderHostVanElements(hostVans) {
+    const hostVansEls = hostVans.map(van => (
+      <Link
+        to={van.id}
+        key={van.id}
+        className="host-van-link-wrapper"
+      >
+        <div className="host-van-single" key={van.id}>
+          <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
+          <div className="host-van-info">
+            <h3>{van.name}</h3>
+            <p>${van.price}/day</p>
+          </div>
         </div>
+      </Link>
+    ));
+
+    return (
+      <div className="host-vans-list">
+        <section>
+          {hostVansEls}
+        </section>
       </div>
-    </Link>
-  ));
+    );
+  }
 
   return (
     <section>
       <h1 className="host-vans-title">Your listed vans</h1>
-      <div className="host-vans-list">
-        {
-          hostVans.length > 0 ? (
-            <section>
-              {hostVansEls}
-            </section>
-          ) : ( <h2>Loading...</h2>)
-        }
-      </div>
+      <Suspense fallback={<h2>Loading host vans...</h2>}>
+        <Await resolve={dataPromise.vans}>
+          {renderHostVanElements}
+        </Await>
+      </Suspense>
     </section>
   );
 }
 
-export default HostVans;
