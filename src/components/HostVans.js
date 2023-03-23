@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Link, useLoaderData, defer, Await } from 'react-router-dom';
-import { getHostVans } from '../api';
+import { getHostVans } from '../api/firebase';
 
 export function loader() {
   return defer({ vans: getHostVans() });

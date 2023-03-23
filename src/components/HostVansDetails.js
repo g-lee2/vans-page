@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
-import { useParams, Link, NavLink, Outlet, useLoaderData, defer, Await } from 'react-router-dom';
-import { getHostVans } from '../api';
+import { Link, NavLink, Outlet, useLoaderData, defer, Await } from 'react-router-dom';
+import { getVan } from "../api/firebase";
 
 export function loader({params}) {
   const hostVanId = params.id;
-  return defer({ vans: getHostVans(hostVanId) });
+  return defer({ vans: getVan(hostVanId) });
 }
 
 export default function HostVansDetails() {

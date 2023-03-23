@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { Link, useLocation, useLoaderData, defer, Await } from "react-router-dom";
-import { getVans } from "../api";
+import { getVan } from "../api/firebase";
 
 export function loader({params}) {
   const vanId = params.id;
-  return defer({ vans: getVans(vanId) });
+  return defer({ vans: getVan(vanId) });
 }
 
 export default function VanDetail() {
